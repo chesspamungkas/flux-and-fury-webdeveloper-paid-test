@@ -265,29 +265,32 @@
          * we use JavaScript to set the appropriate poster image
          */
         updatePoster() {
-            const videos = $$('video[poster]');
-            const width = window.innerWidth;
-            const isMobile = width <= 768;
-            
-            videos.forEach(video => {
-                // Ensure we are only targeting the DZD logo video poster
-                if (video.id === 'testimonial-video') {
-                    let targetPoster;
-                    
-                    if (isMobile) {
-                        // Mobile: use mobile version (570×228 px)
-                        targetPoster = '/assets/DZD_logo_colored_transparent-mobile.webp';
-                    } else {
-                        // Desktop: use desktop version (1125×450 px)
-                        // File: DZD_logo_colored_transparent.webp (no suffix)
-                        targetPoster = '/assets/DZD_logo_colored_transparent.webp';
+            // Use requestAnimationFrame to batch DOM updates and avoid forced reflow
+            requestAnimationFrame(() => {
+                const videos = $$('video[poster]');
+                const width = window.innerWidth;
+                const isMobile = width <= 768;
+                
+                videos.forEach(video => {
+                    // Ensure we are only targeting the DZD logo video poster
+                    if (video.id === 'testimonial-video') {
+                        let targetPoster;
+                        
+                        if (isMobile) {
+                            // Mobile: use mobile version (570×228 px)
+                            targetPoster = '/assets/DZD_logo_colored_transparent-mobile.webp';
+                        } else {
+                            // Desktop: use desktop version (1125×450 px)
+                            // File: DZD_logo_colored_transparent.webp (no suffix)
+                            targetPoster = '/assets/DZD_logo_colored_transparent.webp';
+                        }
+                        
+                        // Only update if different to avoid unnecessary changes
+                        if (video.poster !== targetPoster) {
+                            video.poster = targetPoster;
+                        }
                     }
-                    
-                    // Only update if different to avoid unnecessary changes
-                    if (video.poster !== targetPoster) {
-                        video.poster = targetPoster;
-                    }
-                }
+                });
             });
         },
 
@@ -324,6 +327,19 @@
             // Show play button again when video ends or pauses
             const videos = $$('video');
             videos.forEach(video => {
+                // Handle video load errors gracefully
+                video.addEventListener('error', (e) => {
+                    console.warn('Video failed to load:', video.src);
+                    const wrapper = video.closest('.video-wrapper');
+                    const button = $(CONFIG.selectors.playButton, wrapper);
+                    if (button) {
+                        // Keep play button visible if video fails to load
+                        button.style.opacity = '1';
+                        button.style.pointerEvents = 'none';
+                        button.style.cursor = 'not-allowed';
+                    }
+                });
+
                 video.addEventListener('pause', () => {
                     const wrapper = video.closest('.video-wrapper');
                     const button = $(CONFIG.selectors.playButton, wrapper);
@@ -454,9 +470,14 @@
         },
 
         checkScroll() {
-            if (window.scrollY > this.scrollThreshold) {
+            // Batch DOM updates to avoid forced reflow
+            const shouldScroll = window.scrollY > this.scrollThreshold;
+            const hasScrolled = this.header.classList.contains('scrolled');
+            
+            // Only update if state changed
+            if (shouldScroll && !hasScrolled) {
                 this.header.classList.add('scrolled');
-            } else {
+            } else if (!shouldScroll && hasScrolled) {
                 this.header.classList.remove('scrolled');
             }
         }

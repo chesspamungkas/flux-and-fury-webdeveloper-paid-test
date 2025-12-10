@@ -285,9 +285,23 @@ const current = window.DZD.getCurrentBrand();
 ### Essential Files
 
 - **`.gitignore`** - Excludes unnecessary files from version control (node_modules, build files, OS files)
+- **`.gitattributes`** - Git LFS configuration for tracking large video files
 - **`robots.txt`** - Guides search engine crawlers for better SEO
 - **`.htaccess`** - Apache server configuration (compression, caching, security headers)
 - **`vercel.json`** - Vercel deployment configuration (compression, headers, redirects)
+
+### Git LFS for Video Files
+
+This project uses **Git LFS (Large File Storage)** to handle large video files (>50MB). The video file `jamali-garden-video.mp4` is tracked via Git LFS.
+
+**Important:** When cloning this repository, ensure Git LFS is installed:
+
+```bash
+git lfs install
+git clone <repository-url>
+```
+
+**Note:** Vercel automatically supports Git LFS, so the video file will be deployed correctly.
 
 ### Documentation
 
