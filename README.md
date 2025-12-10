@@ -290,18 +290,16 @@ const current = window.DZD.getCurrentBrand();
 - **`.htaccess`** - Apache server configuration (compression, caching, security headers)
 - **`vercel.json`** - Vercel deployment configuration (compression, headers, redirects)
 
-### Git LFS for Video Files
+### Video Files
 
-This project uses **Git LFS (Large File Storage)** to handle large video files (>50MB). The video file `jamali-garden-video.mp4` is tracked via Git LFS.
+The video file `jamali-garden-video.mp4` is compressed to optimize web delivery. The video is optimized for web playback with the following characteristics:
 
-**Important:** When cloning this repository, ensure Git LFS is installed:
+- **Format**: MP4 (H.264 codec)
+- **Target size**: 2-5 MB (compressed from original)
+- **Resolution**: 720p (1280x720) or optimized for web
+- **Audio**: AAC codec, 128 kbps
 
-```bash
-git lfs install
-git clone <repository-url>
-```
-
-**Note:** Vercel automatically supports Git LFS, so the video file will be deployed correctly.
+**Note:** The video is committed directly to the repository (no Git LFS required) after compression. For compression instructions, see `VIDEO_COMPRESSION_GUIDE.md`.
 
 ### Documentation
 
