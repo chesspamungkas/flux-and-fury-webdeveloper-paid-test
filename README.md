@@ -57,24 +57,6 @@ Simply open `index.html` in a browser. No build process required.
 - Modern web browser (Chrome, Firefox, Safari, Edge)
 - Local web server recommended (for testing CORS, proper file paths, and Lighthouse audits)
 
-**Using a Local Server (Recommended):**
-
-```bash
-# Python 3
-python -m http.server 8000
-
-# Node.js (with http-server)
-npx http-server
-
-# PHP
-php -S localhost:8000
-
-# VS Code Live Server extension
-# Right-click index.html → "Open with Live Server"
-```
-
-Then open `http://localhost:8000` in your browser.
-
 **Note:** The project uses minified CSS/JS files in production. For development, you can switch to unminified versions in `index.html` if needed.
 
 ### Deployment
@@ -326,7 +308,6 @@ The HTML includes comprehensive meta tags:
 - Meta description for search engines
 - Open Graph tags for social media sharing (Facebook, LinkedIn)
 - Twitter Card tags for Twitter sharing
-- Favicon references for browser tabs
 
 ## 📝 Testing Checklist
 
@@ -365,36 +346,6 @@ The HTML includes comprehensive meta tags:
 - [ ] Focus states visible on all interactive elements
 - [ ] Color contrast meets WCAG standards
 - [ ] Reduced motion preferences respected
-
-## 🔄 Version History
-
-- **v1.2.0** - Image optimization & performance improvements
-
-  - Converted all images to WebP format for better performance
-  - Added responsive images with `srcset` for mobile/desktop versions
-  - Implemented `<picture>` element for stats charts
-  - Added JavaScript-based responsive video poster
-  - Minified CSS and JavaScript files
-  - Added critical CSS inline for faster LCP
-  - Optimized image loading with `loading="lazy"` and `decoding="async"`
-  - Added LCP image preloading
-  - Improved Lighthouse scores (Performance, SEO, Accessibility)
-  - Updated deployment configurations (Vercel, Apache)
-
-- **v1.1.0** - Best practices improvements
-
-  - Added `.gitignore` for version control
-  - Added `robots.txt` for SEO
-  - Enhanced HTML meta tags (Open Graph, Twitter Cards)
-  - Added favicon references
-  - Added server configuration files (`.htaccess`, `vercel.json`)
-
-- **v1.0.0** - Initial release
-  - Complete case studies page
-  - Brand switching functionality
-  - Responsive design across all breakpoints
-  - Accessibility features
-  - Custom assets for Jamali Garden
 
 ---
 
