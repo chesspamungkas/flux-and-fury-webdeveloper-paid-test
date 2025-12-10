@@ -154,9 +154,10 @@
                 
                 if (isTarget) {
                     panel.hidden = false;
-                    // Trigger reflow for animation
-                    panel.offsetHeight;
-                    panel.style.animation = 'fadeIn 0.4s ease-out forwards';
+                    // Use requestAnimationFrame to avoid forced reflow
+                    requestAnimationFrame(() => {
+                        panel.style.animation = 'fadeIn 0.4s ease-out forwards';
+                    });
                 } else {
                     panel.hidden = true;
                     panel.style.animation = '';
@@ -310,9 +311,15 @@
 
             // Set responsive poster on init and window resize
             this.updatePoster();
+            
+            // Throttle resize events to avoid excessive calls
+            let resizeTimeout;
             window.addEventListener('resize', () => {
-                this.updatePoster();
-            });
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    this.updatePoster();
+                }, 150);
+            }, { passive: true });
 
             // Show play button again when video ends or pauses
             const videos = $$('video');
@@ -424,6 +431,7 @@
     const HeaderScroll = {
         header: null,
         scrollThreshold: 50,
+        ticking: false,
 
         init() {
             this.header = $(CONFIG.selectors.header);
@@ -435,7 +443,13 @@
 
         bindEvents() {
             window.addEventListener('scroll', () => {
-                this.checkScroll();
+                if (!this.ticking) {
+                    window.requestAnimationFrame(() => {
+                        this.checkScroll();
+                        this.ticking = false;
+                    });
+                    this.ticking = true;
+                }
             }, { passive: true });
         },
 
