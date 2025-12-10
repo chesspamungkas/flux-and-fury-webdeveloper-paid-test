@@ -1,6 +1,6 @@
 # Drop Zero Digital - Web Developer Paid Test
 
-A responsive, modular case studies page built for Drop Zero Digital's website. This project demonstrates front-end development skills, clean code structure, and the ability to convert a mockup into a functional, reusable webpage.
+A responsive, modular case studies page built for Drop Zero Digital.
 
 ## 📁 Project Structure
 
