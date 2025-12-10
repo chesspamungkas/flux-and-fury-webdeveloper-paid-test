@@ -1,0 +1,5 @@
+# robots.txt for Drop Zero Digital Web Developer Paid Test
+
+User-agent: *
+Allow: /
+
