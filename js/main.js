@@ -267,37 +267,19 @@
             const videos = $$('video[poster]');
             const width = window.innerWidth;
             const isMobile = width <= 768;
-            const isDesktop = width > 768 && width <= 1920; // Desktop but not ultra-wide
             
             videos.forEach(video => {
-                const currentPoster = video.getAttribute('poster');
-                if (!currentPoster) return;
-                
-                // Check if current poster is the DZD logo
-                if (currentPoster.includes('DZD_logo_colored_transparent')) {
+                // Ensure we are only targeting the DZD logo video poster
+                if (video.id === 'testimonial-video') {
                     let targetPoster;
                     
                     if (isMobile) {
                         // Mobile: use mobile version (570×228 px)
-                        targetPoster = currentPoster.includes('-mobile.webp') 
-                            ? currentPoster 
-                            : currentPoster.replace('.webp', '-mobile.webp').replace('-desktop.webp', '-mobile.webp');
-                    } else if (isDesktop) {
-                        // Desktop (≤1920px): use desktop version (1125×450 px) if exists, otherwise original
-                        if (currentPoster.includes('-desktop.webp')) {
-                            targetPoster = currentPoster;
-                        } else if (currentPoster.includes('-mobile.webp')) {
-                            targetPoster = currentPoster.replace('-mobile.webp', '-desktop.webp');
-                        } else {
-                            targetPoster = currentPoster.replace('.webp', '-desktop.webp');
-                        }
+                        targetPoster = '/assets/DZD_logo_colored_transparent-mobile.webp';
                     } else {
-                        // Ultra-wide (>1920px): use original (1400×560 px)
-                        targetPoster = currentPoster.includes('-mobile.webp')
-                            ? currentPoster.replace('-mobile.webp', '.webp')
-                            : currentPoster.includes('-desktop.webp')
-                            ? currentPoster.replace('-desktop.webp', '.webp')
-                            : currentPoster;
+                        // Desktop: use desktop version (1125×450 px)
+                        // File: DZD_logo_colored_transparent.webp (no suffix)
+                        targetPoster = '/assets/DZD_logo_colored_transparent.webp';
                     }
                     
                     // Only update if different to avoid unnecessary changes
