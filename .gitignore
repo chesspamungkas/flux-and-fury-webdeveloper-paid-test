@@ -7,8 +7,7 @@ yarn-error.log*
 # Build outputs
 dist/
 build/
-*.min.js
-*.min.css
+# Note: *.min.js and *.min.css are included in the repo for Vercel deployment
 
 # Environment variables
 .env
