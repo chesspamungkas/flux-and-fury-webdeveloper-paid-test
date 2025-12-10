@@ -329,7 +329,7 @@
             videos.forEach(video => {
                 // Handle video load errors gracefully
                 video.addEventListener('error', (e) => {
-                    console.warn('Video failed to load:', video.src);
+                    console.warn('Video failed to load:', video.src, e);
                     const wrapper = video.closest('.video-wrapper');
                     const button = $(CONFIG.selectors.playButton, wrapper);
                     if (button) {
@@ -337,7 +337,17 @@
                         button.style.opacity = '1';
                         button.style.pointerEvents = 'none';
                         button.style.cursor = 'not-allowed';
+                        button.setAttribute('title', 'Video unavailable');
                     }
+                });
+
+                // Log video loading state for debugging
+                video.addEventListener('loadstart', () => {
+                    console.log('Video loading started:', video.src);
+                });
+
+                video.addEventListener('canplay', () => {
+                    console.log('Video can play:', video.src);
                 });
 
                 video.addEventListener('pause', () => {
