@@ -8,12 +8,9 @@ A responsive, modular case studies page built for Drop Zero Digital.
 ├── index.html                 # Main HTML file
 ├── css/
 │   ├── styles.css            # Main stylesheet with CSS custom properties
-│   ├── styles.min.css        # Minified version (production)
-│   ├── responsive.css        # Responsive breakpoint styles
-│   └── responsive.min.css   # Minified version (production)
+│   └── responsive.css        # Responsive breakpoint styles
 ├── js/
-│   ├── main.js               # Brand switching & interactions
-│   └── main.min.js           # Minified version (production)
+│   └── main.js               # Brand switching & interactions
 ├── assets/
 │   ├── logo.webp             # Header logo (desktop)
 │   ├── logo-mobile.webp      # Header logo (mobile)
@@ -57,7 +54,7 @@ Simply open `index.html` in a browser. No build process required.
 - Modern web browser (Chrome, Firefox, Safari, Edge)
 - Local web server recommended (for testing CORS, proper file paths, and Lighthouse audits)
 
-**Note:** The project uses minified CSS/JS files in production. For development, you can switch to unminified versions in `index.html` if needed.
+**Note:** The project uses standard CSS/JS files. No build process or minification required.
 
 ### Deployment
 
@@ -71,7 +68,6 @@ Upload all files to any static hosting service:
 **Note:**
 
 - Compression is automatically enabled via configuration files (`.htaccess`, `vercel.json`) depending on your hosting platform
-- The project uses minified CSS/JS files (`*.min.css`, `*.min.js`) for optimal performance
 - All images are optimized in WebP format with responsive versions for mobile devices
 
 ## ✨ Features
@@ -119,7 +115,6 @@ Fully responsive across all device sizes:
 - Optimized font loading with preconnect and `display=swap`
 - Image optimization (WebP format with responsive `srcset`)
 - Critical CSS inlined for faster LCP
-- Minified CSS/JS files for production
 - LCP image preloading
 - `.gitignore` for version control
 
@@ -219,12 +214,12 @@ Defined in `responsive.css`:
   rel="stylesheet"
 />
 <!-- Preload critical resources -->
-<link rel="preload" as="style" href="css/styles.min.css" />
-<link rel="preload" as="style" href="css/responsive.min.css" />
+<link rel="preload" as="style" href="css/styles.css" />
+<link rel="preload" as="style" href="css/responsive.css" />
 <link rel="preload" as="image" href="assets/hero.webp" fetchpriority="high" />
 <!-- Stylesheets -->
-<link rel="stylesheet" href="css/styles.min.css" />
-<link rel="stylesheet" href="css/responsive.min.css" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/responsive.css" />
 
 <!-- Before </body> -->
 <script src="js/main.js" defer></script>
@@ -235,12 +230,9 @@ Defined in `responsive.css`:
 ```php
 // In functions.php
 function dzd_enqueue_assets() {
-    // Use minified files in production, unminified in development
-    $suffix = (defined('WP_DEBUG') && WP_DEBUG) ? '' : '.min';
-
-    wp_enqueue_style('dzd-styles', get_template_directory_uri() . '/css/styles' . $suffix . '.css');
-    wp_enqueue_style('dzd-responsive', get_template_directory_uri() . '/css/responsive' . $suffix . '.css');
-    wp_enqueue_script('dzd-main', get_template_directory_uri() . '/js/main' . $suffix . '.js', array(), '1.0', true);
+    wp_enqueue_style('dzd-styles', get_template_directory_uri() . '/css/styles.css');
+    wp_enqueue_style('dzd-responsive', get_template_directory_uri() . '/css/responsive.css');
+    wp_enqueue_script('dzd-main', get_template_directory_uri() . '/js/main.js', array(), '1.0', true);
 }
 add_action('wp_enqueue_scripts', 'dzd_enqueue_assets');
 ```
@@ -292,7 +284,7 @@ const current = window.DZD.getCurrentBrand();
 
 ### Essential Files
 
-- **`.gitignore`** - Excludes unnecessary files from version control (node_modules, build files, OS files, minified files)
+- **`.gitignore`** - Excludes unnecessary files from version control (node_modules, build files, OS files)
 - **`robots.txt`** - Guides search engine crawlers for better SEO
 - **`.htaccess`** - Apache server configuration (compression, caching, security headers)
 - **`vercel.json`** - Vercel deployment configuration (compression, headers, redirects)
@@ -336,7 +328,6 @@ The HTML includes comprehensive meta tags:
 - [ ] Responsive images with `srcset` work correctly
 - [ ] Fonts load correctly with preconnect
 - [ ] LCP image (hero.webp) preloads correctly
-- [ ] Minified CSS/JS files are used in production
 - [ ] No console errors
 - [ ] Lighthouse scores meet targets (Performance, Accessibility, Best Practices, SEO)
 
